@@ -1,0 +1,8 @@
+0 Kreslo 3
+1 Veslo 1
+2 Derevo 6
+3 Lodka 9
+4 Veter 5
+5 Plasch 10
+6 Leshii 8
+7 Lampa 7
