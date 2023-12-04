@@ -34,11 +34,12 @@ public:
   bool isNotEmpty(unsigned int index);  // проверить наличие записи по ключу
 
   bool operator==(const HashTable &other);  // равенство
-  entry operator[](unsigned int index);  // принять ключ вернуть запись
+  std::vector<lab::entry>::iterator operator[](unsigned int index);  // принять ключ вернуть запись
   HashTable operator&&(const HashTable &other);  // создает новую таблицу из пересечения двух
 
 private:
   std::vector<entry> *data;
+
   unsigned int hash_function(entry &new_entry);
   std::vector<entry>::iterator find_hash(unsigned int index);
 };

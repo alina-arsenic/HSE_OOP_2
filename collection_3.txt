@@ -1,6 +1,5 @@
 2488 Derevo 56
 4599 Vetka 7
-5388 Kreslo 10
 5662 Vorobei 3
 6941 Veter 5
 8507 Lampa 1

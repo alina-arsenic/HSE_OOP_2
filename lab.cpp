@@ -40,6 +40,7 @@ void lab::HashTable::save(const char *path) {
 void lab::HashTable::load(const char *path) {
   std::ifstream file(path);
   if (file.is_open()) {
+        this->reset();
         char s[LEN*2];
         file.getline(s, LEN*2, '\n');
         lab::entry entry;
@@ -63,7 +64,7 @@ void lab::HashTable::add(entry &new_entry) {
 void lab::HashTable::remove(entry &new_entry) {
     unsigned int index = hash_function(new_entry);
     auto i = find_hash(index);
-    while (i->index == index && strcmp(new_entry.word, i->word)) i++;
+    while (i->index == index && strcmp(new_entry.word, i->word) != 0) i++;
     if (strcmp(new_entry.word, i->word) == 0) data->erase(i);
 }
 
@@ -73,15 +74,52 @@ bool lab::HashTable::isNotEmpty(unsigned int index) {
 }
 
 bool lab::HashTable::operator==(const HashTable &other) {
-    return *data == *other.data;
+    bool result = false;
+    if (data->size() == other.data->size()) {
+        result = true;
+        auto i = data->begin();
+        auto j = other.data->begin();
+        while (i < data->end() && j < other.data->end()) {
+            if (!(strcmp(i->word, j->word) == 0 && i->index == j->index
+            && i->repeats == j->repeats)) {
+                result = false;
+                break;
+            }
+            i++; j++;
+        }
+    }
+    return result;
 }
 
-lab::entry lab::HashTable::operator[](unsigned int index) {
-    //
+std::vector<lab::entry>::iterator lab::HashTable::operator[](unsigned int index) {
+    return find_hash(index);
 }
 
 lab::HashTable lab::HashTable::operator&&(const HashTable &other) {
-    //
+    HashTable result;
+    auto i = data->begin();
+    auto j = other.data->begin();
+    while (i < data->end() && j < other.data->end()) {
+        if (i->index == j->index) {
+            auto k = j;
+            while (i->index == k->index) {
+                if (strcmp(i->word, k->word) == 0 && i->repeats == k->repeats) {
+                    entry new_entry;
+                    new_entry.index = i->index;
+                    new_entry.repeats = i->repeats;
+                    strcpy(new_entry.word, i->word);
+                    result.data->push_back(new_entry);
+                    break;
+                }
+                k++;
+            }
+            i++;
+        } else {
+            if (j->index < i->index) j++;
+            else i++;
+        }
+    }
+    return result;
 }
 
 unsigned int lab::HashTable::hash_function(entry &new_entry) {
