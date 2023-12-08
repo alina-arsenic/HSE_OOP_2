@@ -37,6 +37,8 @@ public:
   std::vector<lab::entry>::iterator operator[](unsigned int index);  // принять ключ вернуть запись
   HashTable operator&&(const HashTable &other);  // создает новую таблицу из пересечения двух
 
+  unsigned int wordCountByRepeats(unsigned int repeats);
+
 private:
   std::vector<entry> *data;
 

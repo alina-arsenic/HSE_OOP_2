@@ -11,6 +11,9 @@ int main(void) {
 
   strcpy(new_entry.word, "Kreslo");
   new_entry.repeats = 10;
+
+  a.remove(new_entry);
+
   a.add(new_entry);
 
   strcpy(new_entry.word, "Lampa");
@@ -65,6 +68,8 @@ int main(void) {
 
   b.load("collection_2.txt");
   assert(a == b);
+
+  std::cout << a.wordCountByRepeats(3);
 
   std::cout << "\nEverything's fine\n";
   return 0;

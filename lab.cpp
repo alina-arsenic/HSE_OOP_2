@@ -149,3 +149,13 @@ std::vector<lab::entry>::iterator lab::HashTable::find_hash(unsigned int hash) {
     }
     return pos;
 }
+
+unsigned int lab::HashTable::wordCountByRepeats(unsigned int repeats) {
+    unsigned int count = 0;
+    for (auto i = data->begin(); i < data->end(); i++) {
+        if (i->repeats >= repeats) {
+            count += 1;
+        }
+    }
+    return count;
+}
